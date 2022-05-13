@@ -1,5 +1,6 @@
 package querqy.lucene.rewrite.prms;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.*;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.util.LuceneTestCase;
+import org.apache.lucene.tests.util.LuceneTestCase;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
@@ -96,7 +97,7 @@ public class PRMSAndQueryTest extends LuceneTestCase {
         assertTrue(query instanceof DisjunctionMaxQuery);
         
         DisjunctionMaxQuery dmq = (DisjunctionMaxQuery) query;
-        List<Query> disjuncts = dmq.getDisjuncts();
+        List<Query> disjuncts = new ArrayList(dmq.getDisjuncts());
         assertEquals(2, disjuncts.size());
         
         Query disjunct1 = disjuncts.get(0);

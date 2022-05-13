@@ -199,7 +199,7 @@ public class DependentTermQueryBuilder implements TermQueryBuilder {
 
                     collectionStats = new CollectionStatistics(term.field(), maxDoc, maxDoc,
                             Math.max(sumTotalTermFreq, sumDocFreq), sumDocFreq);
-                    termStats = searcher.termStatistics(term, termStates);
+                    termStats = searcher.termStatistics(term, termStates.docFreq(), sumTotalTermFreq);
 
                 } else {
                     // we do not need the actual stats, use fake stats with docFreq=maxDoc=ttf=1
@@ -310,10 +310,10 @@ public class DependentTermQueryBuilder implements TermQueryBuilder {
                 return Explanation.noMatch("no matching term");
             }
 
-            @Override
-            public void extractTerms(Set<Term> terms) {
-                terms.add(getTerm());
-            }
+//            @Override
+//            public void extractTerms(Set<Term> terms) {
+//                terms.add(getTerm());
+//            }
 
         }
 
@@ -335,10 +335,10 @@ public class DependentTermQueryBuilder implements TermQueryBuilder {
                 return null;
             }
 
-            @Override
-            public void extractTerms(Set<Term> terms) {
-                terms.add(getTerm());
-            }
+//            @Override
+//            public void extractTerms(Set<Term> terms) {
+//                terms.add(getTerm());
+//            }
 
             @Override
             public boolean isCacheable(LeafReaderContext ctx) {

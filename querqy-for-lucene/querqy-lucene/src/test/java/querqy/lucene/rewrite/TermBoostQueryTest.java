@@ -1,17 +1,17 @@
 package querqy.lucene.rewrite;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.MockAnalyzer;
+import org.apache.lucene.tests.analysis.MockAnalyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.RandomIndexWriter;
+import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.util.LuceneTestCase;
+import org.apache.lucene.tests.util.LuceneTestCase;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 
@@ -95,7 +95,7 @@ public class TermBoostQueryTest extends LuceneTestCase {
     }
 
     @Test
-    public void testExtractTerms() throws Exception {
+    public void testQueryVisitor() throws Exception {
 
         Analyzer analyzer = new MockAnalyzer(random());
 
@@ -113,8 +113,8 @@ public class TermBoostQueryTest extends LuceneTestCase {
         final Set<Term> terms = new HashSet<>();
         final Term term = new Term("f1", "v1");
         new FieldBoostTermQueryBuilder.FieldBoostTermQuery(term, new ConstantFieldBoost(1f))
-                .createWeight(indexSearcher, ScoreMode.COMPLETE, 1f)
-                .extractTerms(terms);
+                .createWeight(indexSearcher, ScoreMode.COMPLETE, 1f).getQuery().visit(QueryVisitor.termCollector(terms));
+//                .extractTerms(terms);
 
         assertTrue(terms.contains(term));
 

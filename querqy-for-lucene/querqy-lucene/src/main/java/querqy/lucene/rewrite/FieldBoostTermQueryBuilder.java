@@ -9,13 +9,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermState;
 import org.apache.lucene.index.TermStates;
 import org.apache.lucene.index.TermsEnum;
-import org.apache.lucene.search.DocIdSetIterator;
-import org.apache.lucene.search.Explanation;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.ScoreMode;
-import org.apache.lucene.search.Scorer;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.Weight;
+import org.apache.lucene.search.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -56,6 +50,21 @@ public class FieldBoostTermQueryBuilder implements TermQueryBuilder {
             }
             this.fieldBoost = fieldBoost;
 
+        }
+
+//        @Override
+//        public void visit(QueryVisitor visitor) {
+//            if (visitor.acceptField(term.field())) {
+//                visitor.consumeTerms(this, term);
+//            }
+//        }
+
+        @Override
+        public void visit(final QueryVisitor visitor) {
+            final Term term = getTerm();
+            if (visitor.acceptField(term.field())) {
+                visitor.consumeTerms(this, term);
+            }
         }
 
         @Override
@@ -166,10 +175,10 @@ public class FieldBoostTermQueryBuilder implements TermQueryBuilder {
                 return fieldBoost;
             }
 
-            @Override
-            public void extractTerms(final Set<Term> terms) {
-                terms.add(getTerm());
-            }
+//            @Override
+//            public void extractTerms(final Set<Term> terms) {
+//                terms.add(getTerm());
+//            }
 
             @Override
             public boolean isCacheable(LeafReaderContext ctx) {

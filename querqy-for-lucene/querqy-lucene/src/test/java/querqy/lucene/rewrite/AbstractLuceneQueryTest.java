@@ -1,6 +1,7 @@
 package querqy.lucene.rewrite;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -182,7 +183,7 @@ public class AbstractLuceneQueryTest {
                 return false;
             }
 
-            List<Query> dmqDisjuncts = dmq.getDisjuncts();
+            List<Query> dmqDisjuncts = new ArrayList(dmq.getDisjuncts());
             if (dmqDisjuncts == null || dmqDisjuncts.size() != disjuncts.length) {
                 return false;
             }

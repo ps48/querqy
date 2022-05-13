@@ -1,7 +1,6 @@
 package querqy.lucene;
 
-import org.apache.lucene.analysis.util.ResourceLoader;
-
+import org.apache.lucene.util.ResourceLoader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
